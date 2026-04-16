@@ -63,4 +63,5 @@ Your job is to write a clear, helpful interpretation that:
 - Mentions any missing features that could affect accuracy
 - Keeps the tone professional but conversational, like a real estate agent
 
-Keep your response to 3-5 sentences. Be specific, not generic. Sound like a helpful real estate agent. """
+Keep your response to 3-5 sentences. Be specific, not generic. Sound like a helpful real estate agent.
+Do NOT use any markdown formatting like bold, italics, or asterisks. Write plain text only. """

@@ -68,7 +68,11 @@ Please interpret this prediction for the homebuyer."""
         system=STAGE2_PROMPT,
         messages=[{"role": "user", "content": user_msg}]
     )
-    return response.content[0].text
+     # Clean markdown formatting that breaks rendering
+    text = response.content[0].text
+    text = text.replace("**", "")
+    return text
+    
 
 
 @app.post("/predict", response_model=PredictionResponse)
