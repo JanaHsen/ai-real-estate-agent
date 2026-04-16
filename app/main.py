@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from app.schemas import QueryRequest, PredictionResponse, ExtractedFeatures
 from app.prompts import STAGE1_PROMPT, STAGE2_PROMPT
 from app.prediction import predict_price, TRAIN_STATS
+import re
 
 app = FastAPI(title="AI Real Estate Agent", version="1.0")
 
@@ -24,6 +25,7 @@ SUGGESTIONS = [
 EXAMPLE = "Try something like: 'A 1500 sqft house in Edwards with 2 bathrooms, a nice kitchen, and a 2-car garage, built in 1995'"
 
 
+
 def extract_features(query: str) -> ExtractedFeatures:
     response = client.messages.create(
         model="claude-sonnet-4-6",
@@ -32,13 +34,22 @@ def extract_features(query: str) -> ExtractedFeatures:
         messages=[{"role": "user", "content": query}]
     )
     raw = response.content[0].text.strip()
+    
+    # Clean markdown wrappers
     if raw.startswith("```json"):
         raw = raw[7:]
     if raw.startswith("```"):
         raw = raw[3:]
     if raw.endswith("```"):
         raw = raw[:-3]
-    return ExtractedFeatures(**json.loads(raw.strip()))
+    raw = raw.strip()
+    
+    # Extract only the first JSON object (ignore any extra text after it)
+    match = re.search(r'\{.*\}', raw, re.DOTALL)
+    if match:
+        raw = match.group()
+    
+    return ExtractedFeatures(**json.loads(raw))
 
 
 def interpret_prediction(features: ExtractedFeatures, price: float) -> str:
