@@ -41,7 +41,7 @@ Best model: XGBoost with log-transformed target, 11 engineered features.
 ### FastAPI (without Docker)
 ```bash
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY="your-key"
+export ANTHROPIC_API_KEY="-"
 uvicorn app.main:app --reload --port 8000
 ```
 
