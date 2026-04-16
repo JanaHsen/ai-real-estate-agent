@@ -102,7 +102,8 @@ def predict(request: QueryRequest):
     except Exception as e:
         return PredictionResponse(
             success=False,
-            message="Something went wrong. Please try again.",
+            message=f"Error: {str(e)}",
             suggestions=SUGGESTIONS,
             example=EXAMPLE
         )
+        
