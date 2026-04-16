@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import json
 
-API_URL = "http://127.0.0.1:8000/predict"
+API_URL = "ai-real-estate-agent-production.up.railway.app"
 
 st.set_page_config(page_title="AI Real Estate Agent", page_icon="🏠", layout="centered")
 
